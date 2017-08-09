@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>
@@ -2136,3 +2137,10 @@ This will only work for locales that have been explicitly imported before.
 ## Something Missing?
 
 If you have ideas for more “How To” recipes that should be on this page, [let us know](https://github.com/facebookincubator/create-react-app/issues) or [contribute some!](https://github.com/facebookincubator/create-react-app/edit/master/packages/react-scripts/template/README.md)
+=======
+
+## Welcome to Book Tracking App
+
+This is an application created to grasp three core concepts of react: props, state and routing. I will update new functionalities periodically. It has been built using the create-react-app tool.<br>
+The basic structure has been provided by Udacity's team. I will add functionality to it as part of my react training.
+>>>>>>> ba4e5e5e9f7b4474224143b79b4533b6f54d9dee
