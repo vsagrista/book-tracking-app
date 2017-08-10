@@ -7,14 +7,25 @@ import AlreadyRead from './AlreadyRead';
 
 class BooksApp extends React.Component {
   state = {
-    books: [
-      {
-        title: "",
-        author: "",
-        state: 0
-      }
-    ],
-    showSearchPage: false
+    books: [],
+    showSearchPage: false,
+  }
+
+  componentDidMount() {
+    BooksAPI.getAll().then((response) => {
+      this.setState({books: response});
+      // id
+      // authors
+      // title
+      // shelf
+      // "currentlyReading"
+      // "wantToRead"
+      // "read"
+    })
+  }
+
+  filterByType = (shelf) => {
+    this.state.books.filter((book) => book.shelf === shelf);
   }
 
   render() {
@@ -47,7 +58,7 @@ class BooksApp extends React.Component {
                 <h1>MyReads</h1>
               </div>
               <div className="list-books-content">
-                <CurrentlyReading />
+                <CurrentlyReading books={this.state.books.filter((book) => book.shelf === "currentlyReading")}/>
                 <WantToRead />
                 <AlreadyRead />
               </div>
