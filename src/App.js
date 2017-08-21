@@ -8,12 +8,18 @@ import AlreadyRead from './AlreadyRead';
 class BooksApp extends React.Component {
   state = {
     books: [],
+    currentlyReading: [],
+    wantToRead: [],
+    read: [],
     showSearchPage: false,
   }
 
   componentDidMount() {
     BooksAPI.getAll().then((response) => {
-      this.setState({books: response});
+      if(response) {
+        this.setState({books: response});
+        this.sortBooksByStatus();
+      }    
       // id
       // authors
       // title
@@ -24,8 +30,18 @@ class BooksApp extends React.Component {
     })
   }
 
+  sortBooksByStatus = () => {
+    this.setState({
+      currentlyReading:  this.filterByType("currentlyReading"),
+      wantToRead: this.filterByType("wantToRead"),
+      read: this.filterByType("read")
+    }) 
+  }
+
   filterByType = (shelf) => {
-    this.state.books.filter((book) => book.shelf === shelf);
+      return this.state.books.filter((book) => {
+        return book.shelf === shelf
+      });
   }
 
   render() {
@@ -36,16 +52,7 @@ class BooksApp extends React.Component {
             <div className="search-books-bar">
               <a className="close-search" onClick={() => this.setState({ showSearchPage: false })}>Close</a>
               <div className="search-books-input-wrapper">
-                {/* 
-                  NOTES: The search from BooksAPI is limited to a particular set of search terms.
-                  You can find these search terms here:
-                  https://github.com/udacity/reactnd-project-myreads-starter/blob/master/SEARCH_TERMS.md
-                  
-                  However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
-                  you don't find a specific author or title. Every search is limited by search terms.
-                */}
                 <input type="text" placeholder="Search by title or author" />
-
               </div>
             </div>
             <div className="search-books-results">
@@ -58,9 +65,9 @@ class BooksApp extends React.Component {
                 <h1>MyReads</h1>
               </div>
               <div className="list-books-content">
-                <CurrentlyReading books={this.state.books.filter((book) => book.shelf === "currentlyReading")}/>
-                <WantToRead />
-                <AlreadyRead />
+                <CurrentlyReading books={this.state.currentlyReading} sortBooksByStatus={this.sortBooksByStatus}/>
+                <WantToRead books={this.state.wantToRead} sortBooksByStatus={this.sortBooksByStatus} />
+                <AlreadyRead books={this.state.read} sortBooksByStatus={this.sortBooksByStatus}/>
               </div>
               <div className="open-search">
                 <a onClick={() => this.setState({ showSearchPage: true })}>Add a book</a>
