@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
 import * as BooksAPI from './BooksAPI';
 
-class CurrentlyReading extends Component {
-    updateBookStatus = (book, shelf) => {
+class BooksListing extends Component {
+
+    updateShelfOnApi = (book, shelf) => {
+        book.shelf = shelf;
         BooksAPI.update(book, shelf).then(()=>{
-            this.props.sortBooksByStatus();
+            this.props.sortBooksByShelf();
         });
     }
+
     render() {
-        let currentlyReading;
-        if (this.props.books) {
-            currentlyReading = (
+        let bookList;
+        bookList = (
                 <ol className="books-grid">
                     {
                         this.props.books.map((book) => (
@@ -22,7 +24,7 @@ class CurrentlyReading extends Component {
                                             backgroundImage: `url(${book.imageLinks.smallThumbnail})`
                                         }}></div>
                                         <div className="book-shelf-changer">
-                                            <select onChange={(event)=> {this.updateBookStatus(book, event.target.value)}}>
+                                            <select value={book.shelf} onChange={(event)=> {this.updateShelfOnApi(book, event.target.value)}}>
                                                 <option value="none" disabled>Move to...</option>
                                                 <option value="currentlyReading">Currently Reading</option>
                                                 <option value="wantToRead">Want to Read</option>
@@ -41,26 +43,15 @@ class CurrentlyReading extends Component {
                     }
                 </ol>
             )
-        } else {
-            currentlyReading = (
-                <div className="container">
-                    <div className="banner">
-                        LOADING
-                        <div className="banner-left"></div>
-                        <div className="banner-right"></div>
-                    </div>
-                </div>
-            )
-        }
         return (
             <div className="bookshelf">
                 <h2 className="bookshelf-title">Currently Reading</h2>
                 <div className="bookshelf-books">
-                    {currentlyReading}
+                    {bookList}
                 </div>
             </div>
-        )
+            );
     }
 }
 
-export default CurrentlyReading;
+export default BooksListing;

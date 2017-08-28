@@ -1,11 +1,10 @@
 import React from 'react';
 import * as BooksAPI from './BooksAPI';
+import BooksListing from './BooksListing'
 import './App.css';
-import CurrentlyReading from './CurrentlyReading';
-import WantToRead from './WantToRead';
-import AlreadyRead from './AlreadyRead';
 
 class BooksApp extends React.Component {
+  
   state = {
     books: [],
     currentlyReading: [],
@@ -18,7 +17,7 @@ class BooksApp extends React.Component {
     BooksAPI.getAll().then((response) => {
       if(response) {
         this.setState({books: response});
-        this.sortBooksByStatus();
+        this.sortBooksByShelf();
       }    
       // id
       // authors
@@ -30,12 +29,12 @@ class BooksApp extends React.Component {
     })
   }
 
-  sortBooksByStatus = () => {
+  sortBooksByShelf = () => {
     this.setState({
       currentlyReading:  this.filterByType("currentlyReading"),
       wantToRead: this.filterByType("wantToRead"),
       read: this.filterByType("read")
-    }) 
+    })
   }
 
   filterByType = (shelf) => {
@@ -65,9 +64,10 @@ class BooksApp extends React.Component {
                 <h1>MyReads</h1>
               </div>
               <div className="list-books-content">
-                <CurrentlyReading books={this.state.currentlyReading} sortBooksByStatus={this.sortBooksByStatus}/>
-                <WantToRead books={this.state.wantToRead} sortBooksByStatus={this.sortBooksByStatus} />
-                <AlreadyRead books={this.state.read} sortBooksByStatus={this.sortBooksByStatus}/>
+                <BooksListing books={this.state.currentlyReading} sortBooksByShelf={this.sortBooksByShelf}/>
+                <BooksListing books={this.state.wantToRead} sortBooksByShelf={this.sortBooksByShelf} />
+                <BooksListing books={this.state.read} sortBooksByShelf={this.sortBooksByShelf}/>
+                
               </div>
               <div className="open-search">
                 <a onClick={() => this.setState({ showSearchPage: true })}>Add a book</a>
