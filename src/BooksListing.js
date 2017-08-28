@@ -6,16 +6,27 @@ class BooksListing extends Component {
     updateShelfOnApi = (book, shelf) => {
         book.shelf = shelf;
         BooksAPI.update(book, shelf).then(()=>{
-            this.props.sortBooksByShelf();
+            this.props.changeBookShelf(book);
         });
     }
 
+    setHeaderText(shelf) {
+        switch (shelf) {
+        case "currentlyReading":
+            return "Currently reading";
+        case "wantToRead":
+            return "Want to read";
+        default:
+            return "Read"     
+        }
+    }
+
     render() {
-        let bookList;
-        bookList = (
+        let bookListByShelf = this.props.books.filter((book) => book.shelf === this.props.shelf);
+        bookListByShelf = (
                 <ol className="books-grid">
                     {
-                        this.props.books.map((book) => (
+                        bookListByShelf.map((book) => (
                             <li key={book.id}>
                                 <div className="book">
                                     <div className="book-top">
@@ -45,9 +56,9 @@ class BooksListing extends Component {
             )
         return (
             <div className="bookshelf">
-                <h2 className="bookshelf-title">Currently Reading</h2>
+                <h2 className="bookshelf-title">{this.setHeaderText(this.props.shelf)}</h2>
                 <div className="bookshelf-books">
-                    {bookList}
+                    {bookListByShelf}
                 </div>
             </div>
             );
