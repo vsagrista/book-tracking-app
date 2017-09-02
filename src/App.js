@@ -72,9 +72,11 @@ class BooksApp extends React.Component {
           </div>
         )} />
         
-      
+    
 
-        <Route exact path="/search" component={SearchBook} />
+        <Route exact path='/search' render={() => (          
+            <SearchBook updateShelfOnApi={ this.updateShelfOnApi.bind(this) }/>
+        )}/>
          
         
         

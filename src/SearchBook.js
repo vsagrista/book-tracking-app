@@ -11,6 +11,7 @@ class SearchBook extends Component {
         this.state = {
             searchResults: []
         }
+        console.log(this.props)
     }
 
     componentWillReceiveProps(nextProps) {
@@ -48,7 +49,7 @@ class SearchBook extends Component {
                     </div>
                 </div>
                 <div className='search-books-results'>
-                    <BooksListing books={this.state.searchResults} />
+                    <BooksListing books={this.state.searchResults} updateShelfOnApi={ this.props.updateShelfOnApi } />
                 </div>
             </div>
         )
