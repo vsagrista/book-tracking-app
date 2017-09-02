@@ -44,12 +44,16 @@ class SearchBook extends Component {
             <div className='search-books'>
                 <div className='search-books-bar'>
                     <Link className='close-search' to='/' >Close</Link>
+                    <div className="success-msg">
+                        <i className="fa fa-check"></i>
+                        This is a success message.
+                        </div>
                     <div className='search-books-input-wrapper'>
                         <input onChange={this.handleUserInput} type='text' placeholder='Search by title or author' />
                     </div>
                 </div>
                 <div className='search-books-results'>
-                    <BooksListing books={this.state.searchResults} updateShelfOnApi={ this.props.updateShelfOnApi } />
+                    <BooksListing books={this.state.searchResults} updateShelfOnApi={this.props.updateShelfOnApi} />
                 </div>
             </div>
         )
