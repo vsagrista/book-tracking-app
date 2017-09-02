@@ -7,23 +7,23 @@ import { Route } from 'react-router-dom'
 import './App.css';
 
 class BooksApp extends React.Component {
-  
+
   state = {
     books: []
   }
 
   componentDidMount() {
     BooksAPI.getAll().then((response) => {
-      if(response)
-        this.setState({books: response});  
+      if (response)
+        this.setState({ books: response });
     })
   }
 
- changeBookShelf = (bookToUpdate) => {
+  changeBookShelf = (bookToUpdate) => {
     this.state.books.forEach((book) => {
-      if(book.id === bookToUpdate.id)
-        this.setState({book: bookToUpdate});
-    });    
+      if (book.id === bookToUpdate.id)
+        this.setState({ book: bookToUpdate });
+    });
   }
 
   render() {
@@ -31,22 +31,38 @@ class BooksApp extends React.Component {
       <div>
         <Route exact path='/' render={() => (
           <div className='app'>
-                  <div className='list-books'>
-                    <div className='list-books-title'>
-                      <h1>MyReads</h1>
-                    </div>
-                    <div className='list-books-content'>
-                      <BooksListing shelf={'currentlyReading'} books={this.state.books} changeBookShelf={this.changeBookShelf}/>
-                      <BooksListing shelf={'wantToRead'} books={this.state.books} changeBookShelf={this.changeBookShelf}/>
-                      <BooksListing shelf={'read'} books={this.state.books} changeBookShelf={this.changeBookShelf}/>        
-                    </div>
-                    <div className='open-search'>
-                      <Link to='/search' >Add a book</Link>
-                    </div>
+            <div className='list-books'>
+              <div className='list-books-title'>
+                <h1>MyReads</h1>
+              </div>
+              <div className='list-books-content'>
+                <div className='bookshelf'>
+                  <h2 className='bookshelf-title'>Currently Reading</h2>
+                  <div className='bookshelf-books'>
+                    <BooksListing shelf={ 'currentlyReading'} books={ this.state.books } changeBookShelf={ this.changeBookShelf } />
                   </div>
+                </div>
+                <div className='bookshelf'>
+                  <h2 className='bookshelf-title'>Want to read</h2>
+                  <div className='bookshelf-books'>
+                    <BooksListing shelf={ 'wantToRead' } books={ this.state.books } changeBookShelf={ this.changeBookShelf } />
+                  </div>
+                </div>
+                <div className='bookshelf'>
+                  <h2 className='bookshelf-title'>Read</h2>
+                  <div className='bookshelf-books'>
+                    <BooksListing shelf={'read'} books={ this.state.books } changeBookShelf={ this.changeBookShelf } />
+                  </div>
+                </div>
+              </div>
+              <div className='open-search'>
+                <Link to='/search' >Add a book</Link>
+              </div>
             </div>
-        )}/>   
-        <Route exact path='/search' component={ SearchBook }/> 
+            
+          </div>
+        )} />
+        <Route exact path='/search' component={SearchBook} />
       </div>
     )
   }
