@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
-import * as BooksAPI from './BooksAPI';
 
 class BooksListing extends Component {
-
-    updateShelfOnApi = (book, shelf) => {
-        BooksAPI.update(book, shelf);
-    }
 
     setBooksOrderedList = (books) => {
         return (
@@ -20,7 +15,7 @@ class BooksListing extends Component {
                                         backgroundImage: `url(${book.imageLinks.smallThumbnail})`
                                     }}></div>
                                     <div className='book-shelf-changer'>
-                                        <select value={book.shelf ? book.shelf: ''} onChange={(event) => { this.updateShelfOnApi(book, event.target.value) }}>
+                                        <select value={book.shelf} onChange={ (event) => { this.props.updateShelfOnApi(book, event.target.value) } }>
                                             <option value='none' disabled>Move to...</option>
                                             <option value='currentlyReading'>Currently Reading</option>
                                             <option value='wantToRead'>Want to Read</option>
@@ -44,8 +39,7 @@ class BooksListing extends Component {
     prepareBookList = () => {
         // needs books sorted by shelf
         if (this.props.shelf) {
-            let booksOrderedByShelf = this.props.books.filter((book) => book.shelf === this.props.shelf);
-            return this.setBooksOrderedList(booksOrderedByShelf);
+            return this.setBooksOrderedList(this.props.books.filter((book) => book.shelf === this.props.shelf));
         // display all found books
         } else if (this.props.books) {
             return this.setBooksOrderedList(this.props.books);

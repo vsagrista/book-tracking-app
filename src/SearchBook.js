@@ -7,21 +7,35 @@ class SearchBook extends Component {
 
     constructor() {
         super();
-        this.timeout;
+        this.timeout = null;
         this.state = {
             searchResults: []
         }
     }
 
-    searchBookOnApi = (event) => {
+    componentWillReceiveProps(nextProps) {
+        //console.log(nextProps);
+        console.log("will receive", this.props)
+    }
+
+    shouldComponentUpdate(nextProps) {
+        console.log("updated", nextProps)
+        return true;
+    }
+
+    handleUserInput = (event) => {
         event.persist();
-        clearTimeout(this.timeout);
         this.timeout = setTimeout(() => {
-            BooksAPI.search(event.target.value, 100).then((result) => {
-                if (typeof result !== 'undefined' && !result.error)
-                    this.setState({ searchResults: result })
-            });
+            this.searchInTheBooksApi(event.target.value)
         }, 500);
+    }
+
+    searchInTheBooksApi = (searchText, timeout) => {
+        clearInterval(this.timeout);
+        BooksAPI.search(searchText, 100).then((result) => {
+            if (typeof result !== 'undefined' && !result.error)
+                this.setState({ searchResults: result });
+        });
     }
 
     render() {
@@ -30,7 +44,7 @@ class SearchBook extends Component {
                 <div className='search-books-bar'>
                     <Link className='close-search' to='/' >Close</Link>
                     <div className='search-books-input-wrapper'>
-                        <input onChange={this.searchBookOnApi} type='text' placeholder='Search by title or author' />
+                        <input onChange={this.handleUserInput} type='text' placeholder='Search by title or author' />
                     </div>
                 </div>
                 <div className='search-books-results'>
