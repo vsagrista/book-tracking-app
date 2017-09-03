@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class BooksListing extends Component {
 
@@ -54,3 +55,8 @@ class BooksListing extends Component {
 }
 
 export default BooksListing;
+
+BooksListing.propTypes = {
+  setBooksOrderedList: PropTypes.func,
+  prepareBookList: PropTypes.func
+};

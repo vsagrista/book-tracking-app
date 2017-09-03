@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+
 import BooksListing from './BooksListing';
 import * as BooksAPI from './BooksAPI';
 
@@ -13,9 +15,9 @@ class SearchBook extends Component {
         }
     }
 
-    // waits until the user stops typing
+    // waits of user to stop typing
     handleUserInput = (event) => {
-        event.persist(); // lets the timeout do its thing
+        event.persist(); // lets timeout do its thing
         this.timeout = setTimeout(() => {
             this.searchInTheBooksApi(event.target.value)
         }, 500);
@@ -37,7 +39,8 @@ class SearchBook extends Component {
             result.map((foundBook, i) => {
                 if(book.id === foundBook.id)
                     return result[i].shelf = book.shelf; // the book is in our collection
-            });
+                return true;
+             });  
         });
     }
 
@@ -59,3 +62,10 @@ class SearchBook extends Component {
 }
 
 export default SearchBook;
+
+SearchBook.propTypes = {
+  searchResults: PropTypes.array,
+  timeout: PropTypes.any,
+  handleUserInput: PropTypes.func,
+  mapWithCurrentBooks: PropTypes.func
+};

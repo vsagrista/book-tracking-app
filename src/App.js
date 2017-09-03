@@ -1,12 +1,14 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import './App.css';
+
+import { Link } from 'react-router-dom';
+import { Route } from 'react-router-dom';
+
 import * as BooksAPI from './BooksAPI';
 import BooksListing from './BooksListing';
 import SearchBook from './SearchBook';
-import * as FlashMessages from './FlashMessages'
-import { Link } from 'react-router-dom'
-import { Route } from 'react-router-dom'
-import './App.css';
-
+import * as FlashMessages from './FlashMessages';
 
 class BooksApp extends React.Component {
 
@@ -26,7 +28,7 @@ class BooksApp extends React.Component {
       if (!response.error) {
         this.setState({ books: response });
       } else {
-        console.log('something happened');
+        console.log('some error');
       }
     })
   }
@@ -86,3 +88,9 @@ class BooksApp extends React.Component {
 }
 
 export default BooksApp;
+
+BooksApp.propTypes = {
+  books: PropTypes.array,
+  getBooksFromApi: PropTypes.func,
+  updateShelfOnApi: PropTypes.func
+};
