@@ -13,8 +13,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ```
 Git installed
-Node installed
-NPM installed
+Node and NPM installed
 ```
 
 ### Installing
