@@ -24,6 +24,8 @@ Git clone the repo & cd to file
 
 ```
 git clone https://github.com/vsagrista/book-tracking-app.git
+
+cd book-tracking-app
 ```
 
 Install node libraries
