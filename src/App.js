@@ -18,23 +18,59 @@ class BooksApp extends React.Component {
 
   componentDidMount() {
     this.getBooksFromApi();
+    // document.getElementById('root').appendChild(this.successMessageHtml());
   }
 
   getBooksFromApi = () => {
     BooksAPI.getAll().then((response) => {
-      if (response)
+      if (!response.error) {
         this.setState({ books: response });
+      } else {
+        console.log('something happened');
+      }
     })
   }
 
   updateShelfOnApi = (book, shelf) => {
-        book.shelf = shelf;
-        BooksAPI.update(book, shelf).then(() => {
-             BooksAPI.getAll();
-        }).then(()=> {
-          this.getBooksFromApi();
-        });
+    book.shelf = shelf; // update the state
+    BooksAPI.update(book, shelf).then(() => {
+      BooksAPI.getAll();
+    }).then(() => {
+      this.getBooksFromApi();
+      this.showAlert('success');
+    });
   }
+
+  showAlert = (type) => {
+    switch (type) {
+      case 'success':
+        document.getElementById('root').appendChild(this.successMessageHtml());
+        this.fadeInAndOut('success-message', 'success-animate');
+      break;
+      default:
+        return;
+    }
+  }
+
+
+  fadeInAndOut = () => {
+    let alertMessage = document.getElementById('success-message');
+    alertMessage.classList.remove('success-animate');
+    alertMessage.className = 'success-animate';
+    setTimeout(() => {
+      alertMessage.classList.remove('success-animate');
+      alertMessage.className = 'hide';
+    }, 2000);
+  }
+
+  successMessageHtml = () => {
+      var successMessage = document.createElement('div');
+      successMessage.className = 'hide';
+      successMessage.id = 'success-message';
+      successMessage.innerHTML = '<i className="fa fa-check"></i>Success!'
+      return successMessage;
+  }
+
 
   render() {
     return (
@@ -49,19 +85,19 @@ class BooksApp extends React.Component {
                 <div className='bookshelf'>
                   <h2 className='bookshelf-title'>Currently Reading</h2>
                   <div className='bookshelf-books'>
-                    <BooksListing shelf={ 'currentlyReading'} books={ this.state.books } updateShelfOnApi={ this.updateShelfOnApi.bind(this) } />
+                    <BooksListing shelf={'currentlyReading'} books={this.state.books} updateShelfOnApi={this.updateShelfOnApi.bind(this)} />
                   </div>
                 </div>
                 <div className='bookshelf'>
                   <h2 className='bookshelf-title'>Want to read</h2>
                   <div className='bookshelf-books'>
-                    <BooksListing shelf={ 'wantToRead' } books={ this.state.books } updateShelfOnApi={ this.updateShelfOnApi.bind(this) } />
+                    <BooksListing shelf={'wantToRead'} books={this.state.books} updateShelfOnApi={this.updateShelfOnApi.bind(this)} />
                   </div>
                 </div>
                 <div className='bookshelf'>
                   <h2 className='bookshelf-title'>Read</h2>
                   <div className='bookshelf-books'>
-                    <BooksListing shelf={'read'} books={ this.state.books } updateShelfOnApi={ this.updateShelfOnApi.bind(this) } />
+                    <BooksListing shelf={'read'} books={this.state.books} updateShelfOnApi={this.updateShelfOnApi.bind(this)} />
                   </div>
                 </div>
               </div>
@@ -69,12 +105,12 @@ class BooksApp extends React.Component {
                 <Link to='/search' >Add a book</Link>
               </div>
             </div>
-            
+
           </div>
         )} />
-        <Route exact path='/search' render={() => (          
-            <SearchBook updateShelfOnApi={ this.updateShelfOnApi.bind(this) } currentCollection={this.state.books} />
-        )}/> 
+        <Route exact path='/search' render={() => (
+          <SearchBook updateShelfOnApi={this.updateShelfOnApi.bind(this)} currentCollection={this.state.books} />
+        )} />
       </div>
     )
   }

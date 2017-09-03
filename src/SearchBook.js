@@ -13,8 +13,9 @@ class SearchBook extends Component {
         }
     }
 
+    // waits until the user stops typing
     handleUserInput = (event) => {
-        event.persist();
+        event.persist(); // lets the timeout do its thing
         this.timeout = setTimeout(() => {
             this.searchInTheBooksApi(event.target.value)
         }, 500);
@@ -23,26 +24,21 @@ class SearchBook extends Component {
     searchInTheBooksApi = (searchText, timeout) => {
         clearInterval(this.timeout);
         BooksAPI.search(searchText, 100).then((result) => {
-            if (typeof result !== 'undefined' && !result.error)
+            if (typeof result !== 'undefined' && !result.error) {
                 this.mapWithCurrentBooks(result);
                 this.setState({ searchResults: result });
+            }
         });
     }
 
-    mapWithCurrentBooks(result) {
+    // search returned object doesn't know which books we have in our collection
+    mapWithCurrentBooks(result) { 
         this.props.currentCollection.forEach((book)=>{
             result.map((foundBook, i) => {
                 if(book.id === foundBook.id)
-                    result[i].shelf = book.shelf; // the book is in our collection
+                    return result[i].shelf = book.shelf; // the book is in our collection
             });
         });
-        console.log(result[0]);
-    }
-
-    displaySuccessMessage = () => {
-        let successMesage = document.getElementById('success-message');
-        successMesage.classList.remove('success-animate hide');
-        successMesage.className = 'success-animate';
     }
 
     render() {
@@ -50,16 +46,12 @@ class SearchBook extends Component {
             <div className='search-books'>
                 <div className='search-books-bar'>
                     <Link className='close-search' to='/'>Close</Link>
-                    <div id='success-message' className="success-msg hide">
-                        <i className="fa fa-check"></i>
-                        {this.successMessage}
-                    </div>
                     <div className='search-books-input-wrapper'>
                         <input onChange={this.handleUserInput} type='text' placeholder='Search by title or author' />
                     </div>
                 </div>
                 <div className='search-books-results'>
-                    <BooksListing books={this.state.searchResults} onSuccess={this.displaySuccessMessage.bind(this)} updateShelfOnApi={this.props.updateShelfOnApi} />
+                    <BooksListing books={this.state.searchResults} updateShelfOnApi={this.props.updateShelfOnApi} />
                 </div>
             </div>
         )

@@ -190,6 +190,7 @@ body, .app {
   right: 15px;
   color: #270;
   background-color: #DFF2BF;
+  z-index: 10000;
   -webkit-animation: fadeOut 0.3s forwards;
   animation: fadeOut 0.3s forwards;
   -webkit-animation-delay: 1s;
