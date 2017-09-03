@@ -2,6 +2,7 @@ import React from 'react';
 import * as BooksAPI from './BooksAPI';
 import BooksListing from './BooksListing';
 import SearchBook from './SearchBook';
+import * as FlashMessages from './FlashMessages'
 import { Link } from 'react-router-dom'
 import { Route } from 'react-router-dom'
 import './App.css';
@@ -18,7 +19,6 @@ class BooksApp extends React.Component {
 
   componentDidMount() {
     this.getBooksFromApi();
-    // document.getElementById('root').appendChild(this.successMessageHtml());
   }
 
   getBooksFromApi = () => {
@@ -37,40 +37,9 @@ class BooksApp extends React.Component {
       BooksAPI.getAll();
     }).then(() => {
       this.getBooksFromApi();
-      this.showAlert('success');
+      FlashMessages.showAlert('success');
     });
   }
-
-  showAlert = (type) => {
-    switch (type) {
-      case 'success':
-        document.getElementById('root').appendChild(this.successMessageHtml());
-        this.fadeInAndOut('success-message', 'success-animate');
-      break;
-      default:
-        return;
-    }
-  }
-
-
-  fadeInAndOut = () => {
-    let alertMessage = document.getElementById('success-message');
-    alertMessage.classList.remove('success-animate');
-    alertMessage.className = 'success-animate';
-    setTimeout(() => {
-      alertMessage.classList.remove('success-animate');
-      alertMessage.className = 'hide';
-    }, 2000);
-  }
-
-  successMessageHtml = () => {
-      var successMessage = document.createElement('div');
-      successMessage.className = 'hide';
-      successMessage.id = 'success-message';
-      successMessage.innerHTML = '<i className="fa fa-check"></i>Success!'
-      return successMessage;
-  }
-
 
   render() {
     return (
