@@ -177,7 +177,11 @@ body, .app {
 
 @import url('//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css');
 
-.success-msg
+.hide {
+  display: none;
+}
+
+.success-animate
  {
   padding: 10px;
   border-radius: 3px 3px 3px 3px;

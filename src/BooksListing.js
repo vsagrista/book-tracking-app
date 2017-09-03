@@ -15,19 +15,16 @@ class BooksListing extends Component {
                                         backgroundImage: `url(${book.imageLinks.smallThumbnail})`
                                     }}></div>
                                     <div className='book-shelf-changer'>
-                                        <select value={book.shelf} onChange={ (event) => { this.props.updateShelfOnApi(book, event.target.value) } }>
+                                        <select value={ typeof book.shelf !== 'undefined' ? book.shelf : '' } onChange={ (event) => { this.props.updateShelfOnApi(book, event.target.value) } }>
                                             <option value='none' disabled>Move to...</option>
                                             <option value='currentlyReading'>Currently Reading</option>
                                             <option value='wantToRead'>Want to Read</option>
                                             <option value='read'>Read</option>
                                             <option value='none'>None</option>
+                                            <option className='hide' value=''></option>
                                         </select>
                                     </div>
                                 </div>
-                                <div className='book-title'>{book.title}</div>
-                                {/*{book.authors.map((author) => (
-                                        <div key={author} className='book-authors'>{author}</div>
-                                    ))}*/}
                             </div>
                         </li>
                     ))

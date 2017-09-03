@@ -28,6 +28,7 @@ class BooksApp extends React.Component {
   }
 
   updateShelfOnApi = (book, shelf) => {
+        book.shelf = shelf;
         BooksAPI.update(book, shelf).then(() => {
              BooksAPI.getAll();
         }).then(()=> {
@@ -72,7 +73,7 @@ class BooksApp extends React.Component {
           </div>
         )} />
         <Route exact path='/search' render={() => (          
-            <SearchBook updateShelfOnApi={ this.updateShelfOnApi.bind(this) }/>
+            <SearchBook updateShelfOnApi={ this.updateShelfOnApi.bind(this) } currentCollection={this.state.books} />
         )}/> 
       </div>
     )
