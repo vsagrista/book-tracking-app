@@ -12,7 +12,7 @@ These instructions will get you a copy of the project up and running on your loc
 ### Prerequisites
 
 ```
-Node js installed
+Node.js installed
 NPM installed
 ```
 
@@ -43,5 +43,5 @@ The last command will automatically open the app in the brower. Once it does, yo
 ## Built With
 
 * ReactJS - The web framework used
-* Using create-react-app tool - Dependency Management
+* Using create-react-app - React app boilerplate tool 
 
