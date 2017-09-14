@@ -52,31 +52,13 @@ class BooksApp extends React.Component {
               <div className='list-books-title'>
                 <h1>MyReads</h1>
               </div>
-              <div className='list-books-content'>
-                <div className='bookshelf'>
-                  <h2 className='bookshelf-title'>Currently Reading</h2>
-                  <div className='bookshelf-books'>
-                    <BooksListing shelf={'currentlyReading'} books={this.state.books} updateShelfOnApi={this.updateShelfOnApi.bind(this)} />
-                  </div>
-                </div>
-                <div className='bookshelf'>
-                  <h2 className='bookshelf-title'>Want to read</h2>
-                  <div className='bookshelf-books'>
-                    <BooksListing shelf={'wantToRead'} books={this.state.books} updateShelfOnApi={this.updateShelfOnApi.bind(this)} />
-                  </div>
-                </div>
-                <div className='bookshelf'>
-                  <h2 className='bookshelf-title'>Read</h2>
-                  <div className='bookshelf-books'>
-                    <BooksListing shelf={'read'} books={this.state.books} updateShelfOnApi={this.updateShelfOnApi.bind(this)} />
-                  </div>
-                </div>
-              </div>
+              <BooksListing shelf={'0'} books={this.state.books} updateShelfOnApi={this.updateShelfOnApi.bind(this)} />
+              <BooksListing shelf={'1'} books={this.state.books} updateShelfOnApi={this.updateShelfOnApi.bind(this)} />
+              <BooksListing shelf={'2'} books={this.state.books} updateShelfOnApi={this.updateShelfOnApi.bind(this)} />
               <div className='open-search'>
                 <Link to='/search' >Add a book</Link>
               </div>
             </div>
-
           </div>
         )} />
         <Route exact path='/search' render={() => (
