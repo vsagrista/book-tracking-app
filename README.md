@@ -1,7 +1,3 @@
-## Welcome to Book Tracking App
-
-This is an application created to grasp some of the core concepts of react, such as props, state and routing. I will update new functionalities periodically. It has been built using the create-react-app tool.<br>
-The basic structure has been provided by Udacity's team. I will add functionality to it as part of my react training.
 
 # Book Tracking App
 
@@ -16,8 +12,8 @@ These instructions will get you a copy of the project up and running on your loc
 ### Prerequisites
 
 ```
-Node js installed
-NPM installed
+Git installed
+Node and NPM installed
 ```
 
 ### Installing
@@ -28,6 +24,8 @@ Git clone the repo & cd to file
 
 ```
 git clone https://github.com/vsagrista/book-tracking-app.git
+
+cd book-tracking-app
 ```
 
 Install node libraries
@@ -47,5 +45,5 @@ The last command will automatically open the app in the brower. Once it does, yo
 ## Built With
 
 * ReactJS - The web framework used
-* Using create-react-app tool - Dependency Management
+* Using create-react-app - React app boilerplate tool 
 
