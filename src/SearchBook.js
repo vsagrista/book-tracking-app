@@ -11,7 +11,8 @@ class SearchBook extends Component {
         super();
         this.timeout = null;
         this.state = {
-            searchResults: []
+            searchResults: [],
+            shelf: '3'
         }
     }
 
@@ -26,21 +27,27 @@ class SearchBook extends Component {
     searchInTheBooksApi = (searchText, timeout) => {
         clearInterval(this.timeout);
         BooksAPI.search(searchText, 100).then((result) => {
-            if (typeof result !== 'undefined' && !result.error) {
-                this.mapWithCurrentBooks(result);
-                this.setState({ searchResults: result });
-            }
+            this.handleSearchResults(result);
         });
     }
 
+    handleSearchResults = (result) => {
+        if (typeof result !== 'undefined' && !result.error) {
+            this.mapWithCurrentBooks(result);
+            this.setState({ searchResults: result, shelf: null});
+        } else {
+            this.setState({ searchResults: [], shelf: '4' });
+        };
+    }
+
     // search returned object doesn't know which books we have in our collection
-    mapWithCurrentBooks(result) { 
-        this.props.currentCollection.forEach((book)=>{
+    mapWithCurrentBooks(result) {
+        this.props.currentCollection.forEach((book) => {
             result.map((foundBook, i) => {
-                if(book.id === foundBook.id)
+                if (book.id === foundBook.id)
                     return result[i].shelf = book.shelf; // the book is in our collection
                 return true;
-             });  
+            });
         });
     }
 
@@ -54,7 +61,7 @@ class SearchBook extends Component {
                     </div>
                 </div>
                 <div className='search-books-results'>
-                    <BooksListing books={this.state.searchResults} updateShelfOnApi={this.props.updateShelfOnApi} />
+                    <BooksListing shelf={this.state.shelf} books={this.state.searchResults} updateShelfOnApi={this.props.updateShelfOnApi} />
                 </div>
             </div>
         )
@@ -64,8 +71,9 @@ class SearchBook extends Component {
 export default SearchBook;
 
 SearchBook.propTypes = {
-  searchResults: PropTypes.array,
-  timeout: PropTypes.any,
-  handleUserInput: PropTypes.func,
-  mapWithCurrentBooks: PropTypes.func
+    searchResults: PropTypes.array,
+    timeout: PropTypes.any,
+    handleUserInput: PropTypes.func,
+    handleSearchResults: PropTypes.func,
+    mapWithCurrentBooks: PropTypes.func
 };
