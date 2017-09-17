@@ -14,7 +14,7 @@ class BooksListing extends Component {
 setBooksOrderedList = (books) => {
     return (
         <div className='bookshelf'>
-            <h2 className='bookshelf-title'>{this.shelves.header[this.props.shelf]}</h2>
+            <h2 className={this.shelves.header[this.props.shelf]? 'bookshelf-title': ''}>{this.shelves.header[this.props.shelf]}</h2>
             <div className='bookshelf-books'>
                 <ol className='books-grid'>
                     {
